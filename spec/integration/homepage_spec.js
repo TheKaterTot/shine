@@ -1,17 +1,12 @@
-require('../spec_helper');
-const Browser = require('zombie');
-
-Browser.localhost('localhost', 8888);
+const injectBrowser = require('testium/mocha')
 
 describe('homepage', function() {
-  const browser = new Browser();
 
-  before(function(done) {
-    browser.visit('/', done);
-  });
+  before(injectBrowser());
 
   it('displays the canvas', function() {
-    browser.assert.success();
-    browser.assert.element('canvas#game-screen');
-  })
-})
+    this.browser.navigateTo('/');
+    this.browser.assert.httpStatus(200);
+    this.browser.assert.elementExists('canvas#game-screen');
+  });
+});
