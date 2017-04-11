@@ -7,6 +7,6 @@ describe('homepage', function() {
   it('displays the canvas', function() {
     this.browser.navigateTo('/');
     this.browser.assert.httpStatus(200);
-    this.browser.assert.elementExists('canvas#game-screen');
+    this.browser.assert.elementExists('#game-screen');
   });
 });

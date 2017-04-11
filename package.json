@@ -17,11 +17,13 @@
     "testium": "^3.3.1"
   },
   "dependencies": {
+    "arcade_keys": "git+https://github.com/bthesorceror/arcade_keys.git",
     "axios": "^0.16.1",
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
     "express": "^4.15.2",
     "jquery": "^3.2.1",
+    "pixi.js": "^4.4.4",
     "pug": "^2.0.0-beta11",
     "watchify": "^3.9.0"
   }
