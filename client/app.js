@@ -18,7 +18,6 @@ class Game {
 
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);
-      this.bump.hit(this.player, this.npc, true);
     });
 
     document.querySelector('#game-screen').appendChild(this.app.view);
@@ -27,6 +26,14 @@ class Game {
   }
 
   moveCamera(player, dx, dy) {
+    if (this.bump.hit(this.player, this.npc, true)) {
+      return;
+    }
+
+    if (this.outOfBounds(player)) {
+      return;
+    }
+
     let changeX = 0;
     let changeY = 0;
     let halfWidth = this.app.renderer.width / 2.0;
@@ -41,6 +48,17 @@ class Game {
 
     this.app.stage.pivot.x += changeX;
     this.app.stage.pivot.y += changeY;
+  }
+
+  outOfBounds(player) {
+    let boundaries = {
+      x: 0,
+      y: 0,
+      width: this.map.width,
+      height: this.map.height
+    }
+
+    return this.bump.contain(player, boundaries);
   }
 
 }
