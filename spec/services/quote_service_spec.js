@@ -14,4 +14,8 @@ describe('quote service', function() {
       done();
     });
   })
+  
+  after(function() {
+    nock.cleanAll();
+  })
 })

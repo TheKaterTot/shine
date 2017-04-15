@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha spec/**/*_spec.js",
+    "test": "mocha spec/**/*_spec.js --timeout 5000",
     "browserify": "browserify -t babelify -o public/app.bundle.js client/app.js",
     "watchify": "watchify -t babelify -o public/app.bundle.js client/app.js",
     "start": "node index.js"
@@ -14,6 +14,7 @@
   "devDependencies": {
     "expect": "^1.20.2",
     "mocha": "^3.2.0",
+    "nock": "^9.0.13",
     "testium": "^3.3.1"
   },
   "dependencies": {
@@ -22,9 +23,12 @@
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
     "bump.js": "^1.0.3",
+    "dotenv": "^4.0.0",
     "events": "^1.1.1",
     "express": "^4.15.2",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.9.4",
     "pixi.js": "^4.4.4",
     "pug": "^2.0.0-beta11",
     "watchify": "^3.9.0"
