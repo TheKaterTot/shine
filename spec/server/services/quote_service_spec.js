@@ -1,6 +1,6 @@
 const nock = require('nock');
 const expect = require('expect');
-const quoteService = require('../../services/quote_service')
+const quoteService = require('../../../services/quote_service')
 
 describe('quote service', function() {
   it('returns quote objects', function(done) {
@@ -14,7 +14,7 @@ describe('quote service', function() {
       done();
     });
   })
-  
+
   after(function() {
     nock.cleanAll();
   })

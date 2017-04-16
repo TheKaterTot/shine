@@ -1,4 +1,4 @@
-require('../spec_helper');
+require('../../spec_helper');
 const axios = require('axios');
 const expect = require('expect');
 const nock = require('nock');

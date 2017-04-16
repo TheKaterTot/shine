@@ -26,7 +26,15 @@ class Game {
   }
 
   moveCamera(player, dx, dy) {
-    if (this.bump.hit(this.player, this.npc, true)) {
+    function interact() {
+      if(this.npc.isEligibleForInteraction(this.player)) {
+        $.getJSON('/api/quote', function(quote) {
+          alert(`${quote.body} -- ${quote.author}`);
+        })
+      }
+    }
+
+    if (this.bump.hit(this.player, this.npc, true, true, true, interact.bind(this))) {
       return;
     }
 

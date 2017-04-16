@@ -1,5 +1,4 @@
 require('dotenv').config()
-console.dir(process.env)
 const express = require('express');
 const _ = require('lodash');
 const getQuotes = require('./services/quote_service');

@@ -1,5 +1,6 @@
 const PIXI = require('pixi.js');
 const ArcadeKeys = require('arcade_keys');
+const generateID = require('./entity')
 
 let arcadeKeys = ArcadeKeys();
 
@@ -10,6 +11,7 @@ class Player extends PIXI.Sprite {
     this.x = x;
     this.y = y;
     this.speed = 1.0;
+    this.id = generateID();
   }
 
   tick(deltaTime) {
