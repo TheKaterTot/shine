@@ -4,6 +4,11 @@ html
   body
     header
       h1 Game
+      - if(user)
+        p Welcome, #{user.username}
+        a(href="/logout") Logout
+      - else
+        a(href="/login") Sign in via Twitter
     #game-screen
     script(src="/app.bundle.js")
     
