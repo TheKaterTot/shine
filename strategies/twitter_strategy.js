@@ -1,5 +1,6 @@
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
+const User = require('../models/user');
 
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
@@ -7,15 +8,14 @@ passport.use(new TwitterStrategy({
     callbackURL: "http://127.0.0.1:5000/oauth/twitter/callback"
   },
   function(token, tokenSecret, profile, cb) {
-    cb(null, profile);
+    User.findOrCreateByProfile(profile, token, cb);
   }
 ));
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user);
+  cb(null, user._id);
 });
 
-passport.deserializeUser(function(obj, cb) {
-  console.dir(obj)
-  cb(null, obj);
+passport.deserializeUser(function(id, cb) {
+  User.findOne({_id: id}, cb);
 });

@@ -23,7 +23,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (req, res) {
-  console.dir(req.user)
   res.render('index', {user: req.user});
 });
 
