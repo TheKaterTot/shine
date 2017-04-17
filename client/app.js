@@ -8,13 +8,21 @@ class Game {
   constructor() {
     this.app = new PIXI.Application(800, 600, { backgroundColor: '0xD3D3D3' });
     this.container = new PIXI.Container();
+    this.map = { width: 2000, height: 2000 };
+    this.texture = PIXI.Texture.fromImage('/images/grass2.png');
+    this.tilingSprite = new PIXI.extras.TilingSprite(
+      this.texture,
+      this.map.width,
+      this.map.height
+    )
+    this.tilingSprite.zOrder = -1;
     this.bump = new Bump(PIXI);
     this.player = new Player(25, 175);
     this.npc = new Npc(400, 300);
+    this.app.stage.addChild(this.tilingSprite);
     this.app.stage.addChild(this.container);
     this.container.addChild(this.player);
     this.container.addChild(this.npc);
-    this.map = { width: 2000, height: 2000 };
 
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);

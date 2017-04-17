@@ -4,7 +4,7 @@ const moment = require('moment');
 class Npc extends PIXI.Sprite {
 
   constructor(x, y) {
-    super(PIXI.Texture.fromImage('/images/Npc.png'));
+    super(PIXI.Texture.fromImage('/images/Npc clone.png'));
     this.x = x;
     this.y = y;
     this.speed = 1.0;
