@@ -49,22 +49,40 @@ table {
 
 /* Body */
 
-body {
+/*body {
   font: 300 18px/22px "Playfair Display", "Helvetica Neue", Helvetica, sans-serif;
-}
+}*/
 
 /* Grid */
 
 
 /* Headers */
+header h1 {
+  font-size: 48px;
+  padding: 10px;
+}
 
-
+.user-session {
+  float: right;
+  padding: 10px;
+}
 
 /* Typography */
 
 
 
 /* Content */
+#game-screen {
+  padding-top: 10px;
+}
 
+#game-screen canvas {
+  display: block;
+  margin: auto;
+  padding: auto;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black;
+}
 
 /* Logo */

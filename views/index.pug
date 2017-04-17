@@ -1,14 +1,16 @@
 html
   head
+    link(rel="stylesheet", href="/application.css")
     title Shine
   body
     header
-      h1 Game
-      - if(user)
-        p Welcome, #{user.username}
-        a(href="/logout") Logout
-      - else
-        a(href="/login") Sign in via Twitter
+      span.user-session
+        - if(user)
+          p Welcome, #{user.username}
+          a(href="/logout") Logout
+        - else
+          a(href="/login") Sign in via Twitter
+      h1 Shine
     #game-screen
     script(src="/app.bundle.js")
     
