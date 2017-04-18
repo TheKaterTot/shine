@@ -7,11 +7,12 @@ let arcadeKeys = ArcadeKeys();
 class Player extends PIXI.Sprite {
 
   constructor(x, y) {
-    super(PIXI.Texture.fromImage('/images/Player.png'));
+    super(PIXI.Texture.fromImage('/images/player_0.png'));
     this.x = x;
     this.y = y;
     this.speed = 1.5;
     this.id = generateID();
+    this.shiny = 0;
   }
 
   tick(deltaTime) {
@@ -35,6 +36,15 @@ class Player extends PIXI.Sprite {
       dx += this.speed * deltaTime;
     }
     this.emit('change', this, dx, dy);
+  }
+
+  getShiny() {
+    if (this.shiny === 4) {
+      return;
+    }
+
+    this.shiny++;
+    this.texture = PIXI.Texture.fromImage(`/images/player_${this.shiny}.png`);
   }
 }
 

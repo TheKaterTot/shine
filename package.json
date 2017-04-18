@@ -32,6 +32,7 @@
     "bluebird": "^3.5.0",
     "browserify": "^14.3.0",
     "bump.js": "^1.0.3",
+    "color-js": "^1.0.4",
     "connect-redis": "^3.2.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
@@ -44,6 +45,7 @@
     "mongoose": "^4.9.4",
     "passport": "^0.3.2",
     "passport-twitter": "^1.0.4",
+    "pixi-extra-filters": "^1.1.0",
     "pixi.js": "^4.4.4",
     "pug": "^2.0.0-beta11",
     "watchify": "^3.9.0"

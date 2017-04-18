@@ -5,12 +5,6 @@ const NpcManager = require('./managers/npc_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 
-let rmodal = new Rmodal($('#modal')[0]);
-
-$('.modal-footer .btn').on('click', function() {
-  rmodal.close();
-})
-
 class Game {
   constructor() {
     this.app = new PIXI.Application(800, 600, { backgroundColor: '0xD3D3D3' });
@@ -39,17 +33,25 @@ class Game {
     document.querySelector('#game-screen').appendChild(this.app.view);
 
     this.player.on('change', this.moveCamera.bind(this));
+
+    this.rmodal = new Rmodal($('#modal')[0], { afterClose: () => {
+      this.player.getShiny();
+    }});
+
+    $('.modal-footer .btn').on('click', () => {
+      this.rmodal.close();
+    })
   }
 
   moveCamera(player, dx, dy) {
     function interact(collision, npc) {
       if(npc.isEligibleForInteraction(this.player)) {
-        $.getJSON('/api/quote', function(quote) {
+        $.getJSON('/api/quote', (quote) => {
           let $div = $('<div />');
           let $body = $('<p />').text(quote.body);
           let $author = $('<p />').text(`-- ${quote.author}`).addClass('author');
           $('.modal-body').html($div.append($body).append($author));
-          rmodal.open();
+          this.rmodal.open();
         })
       }
     }
