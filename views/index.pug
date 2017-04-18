@@ -1,5 +1,7 @@
 html
   head
+    link(rel="stylesheet", href="/rmodal-no-bootstrap.css")
+    link(rel="stylesheet", href="/animate.css")
     link(rel="stylesheet", href="/application.css")
     title Shine
   body
@@ -12,6 +14,13 @@ html
           a(href="/login") Sign in via Twitter
       img(src="images/shine_logo.png")
     #game-screen
+    #modal.modal
+      .modal-dialog.animated
+        .modal-content
+          .modal-header Sometimes I feel gray, too. You know what they say, though...
+          .modal-body
+          .modal-footer
+            button.btn Keep Shining
     script(src="/app.bundle.js")
     
       

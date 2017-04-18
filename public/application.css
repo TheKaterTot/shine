@@ -104,4 +104,44 @@ header img {
   border-color: black;
 }
 
+.modal .modal-dialog {
+	border-radius: 10px;
+	width: 400px;
+	margin: 300px auto;
+}
+
+.modal .modal-header {
+	margin-bottom: 15px;
+	background-color: #FDE3A7;
+	padding: 10px;
+	border-radius: 10px;
+	color: #22313F;
+}
+
+.modal-content {
+	padding: 10px;
+	border-radius: 10px;
+	width: 400px;
+	margin: 300px auto;
+	background-color: #E4F1FE;
+	font-size: 16px;
+}
+
+.modal-body, .modal-footer {
+	padding: 10px;
+}
+
+.modal-body .author {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.modal-footer .btn {
+	color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+	font-size: 16px;
+  border: none;
+}
+
 /* Logo */

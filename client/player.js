@@ -10,7 +10,7 @@ class Player extends PIXI.Sprite {
     super(PIXI.Texture.fromImage('/images/Player.png'));
     this.x = x;
     this.y = y;
-    this.speed = 1.0;
+    this.speed = 1.5;
     this.id = generateID();
   }
 

@@ -3,6 +3,13 @@ const PIXI = require('pixi.js');
 const Player = require('./player');
 const NpcManager = require('./managers/npc_manager');
 const Bump = require('bump.js');
+const Rmodal = require('./rmodal');
+
+let rmodal = new Rmodal($('#modal')[0]);
+
+$('.modal-footer .btn').on('click', function() {
+  rmodal.close();
+})
 
 class Game {
   constructor() {
@@ -38,7 +45,11 @@ class Game {
     function interact(collision, npc) {
       if(npc.isEligibleForInteraction(this.player)) {
         $.getJSON('/api/quote', function(quote) {
-          alert(`${quote.body} -- ${quote.author}`);
+          let $div = $('<div />');
+          let $body = $('<p />').text(quote.body);
+          let $author = $('<p />').text(`-- ${quote.author}`).addClass('author');
+          $('.modal-body').html($div.append($body).append($author));
+          rmodal.open();
         })
       }
     }
