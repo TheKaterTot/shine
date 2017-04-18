@@ -19,8 +19,7 @@ class Game {
     this.bump = new Bump(PIXI);
     this.player = new Player(25, 175);
     this.npcManager = new NpcManager();
-    this.npcManager.generateNpc(400, 300);
-    this.npcManager.generateNpc(500, 200);
+    this.npcManager.generateNpcs(require('./config/npcs'));
     this.app.stage.addChild(this.tilingSprite);
     this.app.stage.addChild(this.container);
     this.container.addChild(this.player);

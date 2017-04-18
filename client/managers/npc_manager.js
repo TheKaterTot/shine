@@ -5,10 +5,15 @@ class NpcManager {
     this.npcs = [];
   }
 
-  generateNpc(x, y) {
-    let image = '/images/Npc clone.png';
+  generateNpc(x, y, image) {
     let npc = new Npc(x, y, image);
     this.npcs.push(npc);
+  }
+
+  generateNpcs(data) {
+    data.forEach((attributes) => {
+      this.generateNpc(attributes.x, attributes.y, attributes.image_path)
+    })
   }
 }
 
