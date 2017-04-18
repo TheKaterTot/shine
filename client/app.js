@@ -1,7 +1,7 @@
 const $ = require('jquery');
 const PIXI = require('pixi.js');
 const Player = require('./player');
-const Npc = require('./npc');
+const NpcManager = require('./managers/npc_manager');
 const Bump = require('bump.js');
 
 class Game {
@@ -18,11 +18,13 @@ class Game {
     this.tilingSprite.zOrder = -1;
     this.bump = new Bump(PIXI);
     this.player = new Player(25, 175);
-    this.npc = new Npc(400, 300);
+    this.npcManager = new NpcManager();
+    this.npcManager.generateNpc(400, 300);
+    this.npcManager.generateNpc(500, 200);
     this.app.stage.addChild(this.tilingSprite);
     this.app.stage.addChild(this.container);
     this.container.addChild(this.player);
-    this.container.addChild(this.npc);
+    this.npcManager.npcs.forEach((npc) => { this.container.addChild(npc); })
 
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);
@@ -34,15 +36,15 @@ class Game {
   }
 
   moveCamera(player, dx, dy) {
-    function interact() {
-      if(this.npc.isEligibleForInteraction(this.player)) {
+    function interact(collision, npc) {
+      if(npc.isEligibleForInteraction(this.player)) {
         $.getJSON('/api/quote', function(quote) {
           alert(`${quote.body} -- ${quote.author}`);
         })
       }
     }
 
-    if (this.bump.hit(this.player, this.npc, true, true, true, interact.bind(this))) {
+    if (this.bump.hit(this.player, this.npcManager.npcs, true, true, true, interact.bind(this))) {
       return;
     }
 

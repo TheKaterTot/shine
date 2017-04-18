@@ -6,11 +6,11 @@ html
     header
       span.user-session
         - if(user)
-          p Welcome, #{user.username}
+          span Hi, #{user.username}
           a(href="/logout") Logout
         - else
           a(href="/login") Sign in via Twitter
-      h1 Shine
+      img(src="images/shine_logo.png")
     #game-screen
     script(src="/app.bundle.js")
     
