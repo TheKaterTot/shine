@@ -5,6 +5,7 @@ const _ = require('lodash');
 const getQuotes = require('./services/quote_service');
 const passport = require('passport');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.static('public'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  store: new RedisStore({url: process.env.REDIS_URL}),
   resave: false,
   saveUninitialized: false,
   cookie: { secure: 'auto' }
