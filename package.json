@@ -9,7 +9,8 @@
     "test": "npm run server-test && npm run client-test",
     "browserify": "browserify -t babelify -o public/app.bundle.js client/app.js",
     "watchify": "watchify -t babelify -o public/app.bundle.js client/app.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "npm run browserify"
   },
   "author": "Katy Farmer",
   "license": "ISC",
