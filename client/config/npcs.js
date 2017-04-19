@@ -4,10 +4,38 @@ module.exports = [{
   image_path: '/images/npc_circle.png'
 }, {
   x: 200,
+  y: 900,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 400,
   y: 600,
   image_path: '/images/npc_circle.png'
 }, {
-  x: 1400,
-  y: 300,
+  x: 1000,
+  y: 1350,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 800,
+  y: 500,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 200,
+  y: 700,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 1700,
+  y: 1000,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 1100,
+  y: 1200,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 100,
+  y: 400,
+  image_path: '/images/npc_circle.png'
+}, {
+  x: 1900,
+  y: 100,
   image_path: '/images/npc_circle.png'
 }]

@@ -4,6 +4,7 @@ const Player = require('./player');
 const NpcManager = require('./managers/npc_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
+const TWEEN = require('tween.js');
 
 class Game {
   constructor() {
@@ -16,7 +17,6 @@ class Game {
       this.map.width,
       this.map.height
     )
-    this.tilingSprite.zOrder = -1;
     this.bump = new Bump(PIXI);
     this.player = new Player(25, 175);
     this.npcManager = new NpcManager();
@@ -24,10 +24,12 @@ class Game {
     this.app.stage.addChild(this.tilingSprite);
     this.app.stage.addChild(this.container);
     this.container.addChild(this.player);
-    this.npcManager.npcs.forEach((npc) => { this.container.addChild(npc); })
-
+    this.npcManager.npcs.forEach((npc) => {
+      this.container.addChild(npc);
+    })
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);
+      TWEEN.update();
     });
 
     document.querySelector('#game-screen').appendChild(this.app.view);
@@ -46,6 +48,12 @@ class Game {
   moveCamera(player, dx, dy) {
     function interact(collision, npc) {
       if(npc.isEligibleForInteraction(this.player)) {
+        npc.stop();
+
+        setTimeout(function () {
+          npc.tween.start();
+        }, 10000)
+
         $.getJSON('/api/quote', (quote) => {
           let $div = $('<div />');
           let $body = $('<p />').text(quote.body);

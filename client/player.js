@@ -1,6 +1,6 @@
 const PIXI = require('pixi.js');
 const ArcadeKeys = require('arcade_keys');
-const generateID = require('./entity')
+const generateID = require('./entity');
 
 let arcadeKeys = ArcadeKeys();
 
