@@ -11,13 +11,26 @@ class PlayerSprite extends PIXI.Sprite {
     this.shiny = 0;
   }
 
+  changeTexture() {
+    this.texture = PIXI.Texture.fromImage(`/images/player_${this.shiny}.png`);
+  }
+
   getShiny() {
     if (this.shiny === 4) {
       return;
     }
 
     this.shiny++;
-    this.texture = PIXI.Texture.fromImage(`/images/player_${this.shiny}.png`);
+    this.changeTexture();
+  }
+
+  loseShine() {
+    if (this.shiny === 0) {
+      return;
+    }
+
+    this.shiny -= 1;
+    this.changeTexture();
   }
 }
 
@@ -34,13 +47,26 @@ class PlayerGraphic extends PIXI.Graphics {
     this.endFill();
   }
 
+  reset() {
+    this.clear();
+    this.draw();
+  }
+
   getShiny() {
     if (this.shiny === 1.0) {
       return;
     }
     this.shiny += 0.25;
-    this.clear();
-    this.draw();
+    this.reset();
+  }
+
+  loseShine() {
+    if (this.shiny === 0) {
+      return;
+    }
+
+    this.shiny -= 0.25;
+    this.reset();
   }
 }
 
@@ -83,6 +109,23 @@ class Player extends PIXI.Sprite {
   getShiny() {
     this.sprite.getShiny();
     this.graphic.getShiny();
+    this.shineTimer();
+  }
+
+  loseShine() {
+    this.sprite.loseShine();
+    this.graphic.loseShine();
+  }
+
+  shineTimer() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+
+    this.timer = setTimeout(() => {
+      this.loseShine();
+      this.shineTimer()
+    }, 25000);
   }
 }
 module.exports = Player;
