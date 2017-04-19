@@ -101,4 +101,14 @@ class Game {
 
 }
 
-new Game();
+PIXI.loader
+  .add('/images/player_0.png')
+  .add('/images/player_1.png')
+  .add('/images/player_2.png')
+  .add('/images/player_3.png')
+  .add('/images/player_4.png')
+  .add('/images/npc_circle.png')
+  .add('/images/grass2.png')
+  .add('/images/background.png').load(function () {
+    new Game();
+  });
