@@ -2,9 +2,15 @@ const $ = require('jquery');
 const PIXI = require('pixi.js');
 const Player = require('./player');
 const NpcManager = require('./managers/npc_manager');
+const TreeManager = require('./managers/tree_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 const TWEEN = require('tween.js');
+
+let client = require('socket.io-client')();
+client.on('ping', function () {
+  // alert('pong');
+})
 
 class Game {
   constructor() {
@@ -21,11 +27,16 @@ class Game {
     this.player = new Player(25, 175);
     this.npcManager = new NpcManager();
     this.npcManager.generateNpcs(require('./config/npcs'));
+    this.treeManager = new TreeManager();
+    this.treeManager.generateTrees(require('./config/trees'));
     this.app.stage.addChild(this.tilingSprite);
     this.app.stage.addChild(this.container);
     this.container.addChild(this.player);
     this.npcManager.npcs.forEach((npc) => {
       this.container.addChild(npc);
+    })
+    this.treeManager.trees.forEach((tree) => {
+      this.container.addChild(tree);
     })
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);
@@ -56,9 +67,30 @@ class Game {
 
         $.getJSON('/api/quote', (quote) => {
           let $div = $('<div />');
+          let $divTwo = $('<div />');
           let $body = $('<p />').text(quote.body);
           let $author = $('<p />').text(`-- ${quote.author}`).addClass('author');
+          let $headerText = $('<p />').text('Sometimes I feel gray, too. But you know...')
+          $('.modal-header').html($divTwo.append($headerText));
           $('.modal-body').html($div.append($body).append($author));
+          this.rmodal.open();
+
+          client.emit('quote', quote, function (message) {
+            //window.alert(message)
+          })
+        })
+      }
+    }
+
+    function interactNature(collision, tree) {
+      if (tree.isEligibleForInteraction(this.player)) {
+        $.getJSON('/api/photo', (photo) => {
+          let $div = $('<div />');
+          let $divTwo = $('<div />');
+          let $headerText = $('<p />').text(`It's a lovely day for walk in the trees...`)
+          let $url = $('<img />').attr('src', `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`).addClass('photo');
+          $('.modal-header').html($divTwo.append($headerText));
+          $('.modal-body').html($div.append($url));
           this.rmodal.open();
         })
       }
@@ -67,6 +99,8 @@ class Game {
     if (this.bump.hit(this.player, this.npcManager.npcs, true, true, true, interact.bind(this))) {
       return;
     }
+
+    if (this.bump.hit(this.player, this.treeManager.trees, true, true, true, interactNature.bind(this)))
 
     if (this.outOfBounds(player)) {
       return;

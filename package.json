@@ -47,6 +47,8 @@
     "passport-twitter": "^1.0.4",
     "pixi.js": "^4.4.4",
     "pug": "^2.0.0-beta11",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
     "tween.js": "^16.6.0",
     "watchify": "^3.9.0"
   }

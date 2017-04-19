@@ -1,0 +1,41 @@
+module.exports = [{
+  x: 60,
+  y: 250,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 185,
+  y: 300,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 130,
+  y: 250,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 50,
+  y: 50,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 1375,
+  y: 1200,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 1550,
+  y: 700,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 1900,
+  y: 1000,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 300,
+  y: 1200,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 100,
+  y: 1400,
+  image_path: '/images/b_trees.png'
+}, {
+  x: 1800,
+  y: 1100,
+  image_path: '/images/b_trees.png'
+}]

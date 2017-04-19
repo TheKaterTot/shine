@@ -82,6 +82,13 @@ header img {
   color: #E87E04;
 }
 
+.intro {
+	color: #E87E04;
+	font-family: serif;
+  font-size: 20px;
+	text-align: center;
+}
+
 /*.user-session a {
 	color: #FDE3A7;
 }*/
@@ -134,6 +141,13 @@ header img {
 .modal-body .author {
 	margin-top: 10px;
 	margin-left: 20px;
+}
+
+.modal-body .photo {
+	width: auto;
+	height: auto;
+	max-height: 300px;
+	max-width: 350px;
 }
 
 .modal-footer .btn {

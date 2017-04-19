@@ -1,13 +1,29 @@
 require('dotenv').config();
 require('./strategies/twitter_strategy');
+
 const express = require('express');
+const socketio = require('socket.io');
+const http = require('http');
+
 const _ = require('lodash');
 const getQuotes = require('./services/quote_service');
+const getPhotos = require('./services/photo_service');
 const passport = require('passport');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 const app = express();
+
+let server = http.createServer(app);
+let io = socketio(server);
+
+io.on('connection', function(socket) {
+  console.info('Connected')
+  socket.on('quote', function (quote, callback) {
+    console.dir(quote)
+    callback('Thanks little buddy!')
+  })
+});
 
 app.set('view engine', 'pug');
 
@@ -54,4 +70,11 @@ app.get('/api/quote', function (req, res) {
   });
 });
 
-module.exports = app;
+app.get('/api/photo', function (req, res) {
+  getPhotos(function (error, photos) {
+    let photo = _.chain(photos).sample().pick(['secret', 'id', 'farm', 'server']);
+    res.json(photo);
+  });
+})
+
+module.exports = server;
