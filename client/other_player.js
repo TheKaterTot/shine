@@ -17,6 +17,7 @@ class PlayerSprite extends PIXI.Sprite {
 
   set shine(value) {
     this.shiny = value;
+    this.changeTexture();
   }
 
   getShiny() {
@@ -91,7 +92,7 @@ class PlayerGraphic extends PIXI.Graphics {
   }
 }
 
-class Player extends PIXI.Sprite {
+class OtherPlayer extends PIXI.Sprite {
   constructor(x, y, shiny = 0) {
     super(PIXI.Texture.fromImage('/images/background.png'));
     this.sprite = new PlayerSprite();
@@ -103,70 +104,16 @@ class Player extends PIXI.Sprite {
     this.speed = 1.5;
     this.x = x;
     this.y = y;
-    this.id = generateID();
-    process.nextTick(() => {
-      this.emit('create', this);
-    })
   }
 
   tick(deltaTime) {
-    let dy = 0;
-    let dx = 0;
-
     this.graphic.updateGraphic(deltaTime);
-
-    if (arcadeKeys.isPressed(ArcadeKeys.keys.up)) {
-      this.y -= this.speed * deltaTime;
-      dy -= this.speed * deltaTime;
-    }
-    else if (arcadeKeys.isPressed(ArcadeKeys.keys.down)) {
-      this.y += this.speed * deltaTime;
-      dy += this.speed * deltaTime;
-    }
-    else if (arcadeKeys.isPressed(ArcadeKeys.keys.left)) {
-      this.x -= this.speed * deltaTime;
-      dx -= this.speed * deltaTime;
-    }
-    else if (arcadeKeys.isPressed(ArcadeKeys.keys.right)) {
-      this.x += this.speed * deltaTime;
-      dx += this.speed * deltaTime;
-    }
-    if (dx !== 0 || dy !== 0) {
-      this.emit('move', this, dx, dy);
-      this.emit('change', this);
-    }
   }
 
-  get data() {
-    return {
-      x: this.x,
-      y: this.y,
-      shiny: this.sprite.shiny
-    }
+  set shiny(value) {
+    this.sprite.shine = value;
+    this.graphic.shine = value;
   }
 
-  getShiny() {
-    this.sprite.getShiny();
-    this.graphic.getShiny();
-    this.shineTimer();
-    this.emit('change', this);
-  }
-
-  loseShine() {
-    this.sprite.loseShine();
-    this.graphic.loseShine();
-    this.emit('change', this);
-  }
-
-  shineTimer() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-
-    this.timer = setTimeout(() => {
-      this.loseShine();
-      this.shineTimer()
-    }, 25000);
-  }
 }
-module.exports = Player;
+module.exports = OtherPlayer;

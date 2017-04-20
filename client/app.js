@@ -1,16 +1,15 @@
 const $ = require('jquery');
+const _ = require('lodash');
 const PIXI = require('pixi.js');
 const Player = require('./player');
 const NpcManager = require('./managers/npc_manager');
 const TreeManager = require('./managers/tree_manager');
+const PlayerManager = require('./managers/player_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 const TWEEN = require('tween.js');
 
 let client = require('socket.io-client')();
-client.on('ping', function () {
-  // alert('pong');
-})
 
 class Game {
   constructor() {
@@ -41,14 +40,34 @@ class Game {
     this.app.ticker.add((deltaTime) => {
       this.player.tick(deltaTime);
       TWEEN.update();
+      _.forIn(this.playerManager.players, (player, id) => {
+        player.tick(deltaTime);
+      });
     });
+
+    this.playerManager = new PlayerManager();
 
     document.querySelector('#game-screen').appendChild(this.app.view);
 
+    client.on('player:update', (id, data) => {
+      this.playerManager.updatePlayer(id, data);
+    });
+
+    client.on('player:create', (id, data) => {
+      let otherPlayer = this.playerManager.addPlayer(id, data);
+
+      this.container.addChild(otherPlayer);
+    });
+
     this.player.on('move', this.moveCamera.bind(this));
+
     this.player.on('change', function(player) {
       client.emit('player:change', player.data);
-    })
+    });
+
+    this.player.on('create', function(player) {
+      client.emit('player:create', player.data);
+    });
 
     this.rmodal = new Rmodal($('#modal')[0], { afterClose: () => {
       this.player.getShiny();

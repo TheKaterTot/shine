@@ -1,4 +1,4 @@
-const generateID = require('../../client/entity');
+const generateID = require('../../shared/id_generator');
 const expect = require('expect');
 const _ = require('lodash');
 

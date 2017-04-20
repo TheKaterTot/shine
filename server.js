@@ -11,6 +11,7 @@ const getPhotos = require('./services/photo_service');
 const passport = require('passport');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const generateID = require('./shared/id_generator')
 
 const app = express();
 
@@ -19,8 +20,12 @@ let io = socketio(server);
 
 io.on('connection', function(socket) {
   console.info('Connected')
+  let id = generateID();
   socket.on('player:change', function(data) {
-    console.dir(data);
+    socket.broadcast.emit('player:update', id, data);
+  })
+  socket.on('player:create', function(data) {
+    socket.broadcast.emit('player:create', id, data);
   })
 });
 
