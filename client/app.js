@@ -123,7 +123,9 @@ class Game {
       return;
     }
 
-    if (this.bump.hit(this.player, this.treeManager.trees, true, true, true, interactNature.bind(this)))
+    if (this.bump.hit(this.player, this.treeManager.trees, true, true, true, interactNature.bind(this))) {
+      return;
+    }
 
     if (this.outOfBounds(player)) {
       return;
