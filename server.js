@@ -19,9 +19,8 @@ let io = socketio(server);
 
 io.on('connection', function(socket) {
   console.info('Connected')
-  socket.on('quote', function (quote, callback) {
-    console.dir(quote)
-    callback('Thanks little buddy!')
+  socket.on('player:change', function(data) {
+    console.dir(data);
   })
 });
 

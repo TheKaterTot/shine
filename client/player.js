@@ -118,18 +118,31 @@ class Player extends PIXI.Sprite {
       this.x += this.speed * deltaTime;
       dx += this.speed * deltaTime;
     }
-    this.emit('change', this, dx, dy);
+    if (dx !== 0 || dy !== 0) {
+      this.emit('move', this, dx, dy);
+      this.emit('change', this);
+    }
+  }
+
+  get data() {
+    return {
+      x: this.x,
+      y: this.y,
+      shiny: this.sprite.shiny
+    }
   }
 
   getShiny() {
     this.sprite.getShiny();
     this.graphic.getShiny();
     this.shineTimer();
+    this.emit('change', this);
   }
 
   loseShine() {
     this.sprite.loseShine();
     this.graphic.loseShine();
+    this.emit('change', this);
   }
 
   shineTimer() {

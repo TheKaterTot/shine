@@ -45,7 +45,10 @@ class Game {
 
     document.querySelector('#game-screen').appendChild(this.app.view);
 
-    this.player.on('change', this.moveCamera.bind(this));
+    this.player.on('move', this.moveCamera.bind(this));
+    this.player.on('change', function(player) {
+      client.emit('player:change', player.data);
+    })
 
     this.rmodal = new Rmodal($('#modal')[0], { afterClose: () => {
       this.player.getShiny();
