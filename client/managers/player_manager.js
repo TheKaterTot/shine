@@ -1,4 +1,4 @@
-const OtherPlayer = require('../client/other_player');
+const OtherPlayer = require('../other_player');
 
 class PlayerManager {
   constructor() {

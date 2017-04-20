@@ -11,23 +11,31 @@ const getPhotos = require('./services/photo_service');
 const passport = require('passport');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const generateID = require('./shared/id_generator')
+const generateID = require('./shared/id_generator');
+const PlayerManager = require('./lib/player_manager');
 
 const app = express();
 
 let server = http.createServer(app);
 let io = socketio(server);
+let playerManager = new PlayerManager();
 
 io.on('connection', function(socket) {
   console.info('Connected')
   let id = generateID();
+  _.forIn(playerManager.players, function(player, id) {
+    socket.emit('player:create', id, player);
+  })
   socket.on('player:change', function(data) {
+    playerManager.updatePlayer(id, data);
     socket.broadcast.emit('player:update', id, data);
   })
   socket.on('player:create', function(data) {
+    playerManager.addPlayer(id, data);
     socket.broadcast.emit('player:create', id, data);
   })
   socket.on('disconnect', function() {
+    playerManager.removePlayer(id);
     io.emit('player:disconnect', id);
   })
 });
