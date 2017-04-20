@@ -4,7 +4,7 @@ const PIXI = require('pixi.js');
 const Player = require('./player');
 const NpcManager = require('./managers/npc_manager');
 const TreeManager = require('./managers/tree_manager');
-const PlayerManager = require('./managers/player_manager');
+const PlayerManager = require('../shared/player_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 const TWEEN = require('tween.js');
@@ -58,6 +58,12 @@ class Game {
 
       this.container.addChild(otherPlayer);
     });
+
+    client.on('player:disconnect', (id) => {
+      let player = this.playerManager.players[id];
+      this.container.removeChild(player);
+      this.playerManager.removePlayer(id);
+    })
 
     this.player.on('move', this.moveCamera.bind(this));
 

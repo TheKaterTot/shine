@@ -1,4 +1,4 @@
-const OtherPlayer = require('../other_player');
+const OtherPlayer = require('../client/other_player');
 
 class PlayerManager {
   constructor() {
@@ -8,6 +8,10 @@ class PlayerManager {
   addPlayer(id, data) {
     this.players[id] = new OtherPlayer(data.x, data.y, data.shiny);
     return this.players[id];
+  }
+
+  removePlayer(id) {
+    delete this.players[id];
   }
 
   updatePlayer(id, data) {

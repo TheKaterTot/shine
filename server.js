@@ -27,6 +27,9 @@ io.on('connection', function(socket) {
   socket.on('player:create', function(data) {
     socket.broadcast.emit('player:create', id, data);
   })
+  socket.on('disconnect', function() {
+    io.emit('player:disconnect', id);
+  })
 });
 
 app.set('view engine', 'pug');
