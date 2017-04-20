@@ -38,13 +38,28 @@ class PlayerGraphic extends PIXI.Graphics {
   constructor() {
     super();
     this.shiny = 0.0;
+    this.outlineColors = [0xECECEC, 0xD2D7D3, 0xDADFE1, 0xBDC3C7, 0xBFBFBF];
+    this.colorIndex = 0;
     this.draw();
+    this.threshold = 25;
+    this.currentTime = 0;
   }
 
   draw() {
-    this.beginFill(0x19B5FE, this.shiny);
-    this.drawRect(-2, -2, 34, 34);
+    this.beginFill(this.outlineColors[this.colorIndex], this.shiny);
+    this.drawRoundedRect(-3, -3, 36, 36, 10);
     this.endFill();
+  }
+
+  updateGraphic(deltaTime) {
+    this.currentTime += deltaTime
+
+    if (this.currentTime > this.threshold) {
+      this.colorIndex = (this.colorIndex+1) % this.outlineColors.length;
+      this.currentTime = 0;
+    }
+
+    this.reset();
   }
 
   reset() {
@@ -57,7 +72,6 @@ class PlayerGraphic extends PIXI.Graphics {
       return;
     }
     this.shiny += 0.25;
-    this.reset();
   }
 
   loseShine() {
@@ -66,7 +80,6 @@ class PlayerGraphic extends PIXI.Graphics {
     }
 
     this.shiny -= 0.25;
-    this.reset();
   }
 }
 
@@ -86,6 +99,8 @@ class Player extends PIXI.Sprite {
   tick(deltaTime) {
     let dy = 0;
     let dx = 0;
+
+    this.graphic.updateGraphic(deltaTime);
 
     if (arcadeKeys.isPressed(ArcadeKeys.keys.up)) {
       this.y -= this.speed * deltaTime;
