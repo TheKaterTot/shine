@@ -144,5 +144,11 @@ PIXI.loader
   .add('/images/npc_circle.png')
   .add('/images/grass2.png')
   .add('/images/background.png').load(function () {
-    new Game();
+    rmodal = new Rmodal($('#new-modal')[0], { afterClose: () => {
+      new Game();
+    }});
+    rmodal.open();
+    $('#new-modal .modal-footer .btn').on('click', () => {
+      rmodal.close();
+    })
   });

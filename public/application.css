@@ -81,14 +81,6 @@ header img {
 .user-session a {
   color: #E87E04;
 }
-
-.intro {
-	color: #E87E04;
-	font-family: serif;
-  font-size: 20px;
-	text-align: center;
-}
-
 /*.user-session a {
 	color: #FDE3A7;
 }*/
@@ -136,6 +128,18 @@ header img {
 
 .modal-body, .modal-footer {
 	padding: 10px;
+}
+
+.special {
+	font-family: serif;
+  font-size: 20px;
+	color: E26A6A;
+}
+
+.intro {
+	color: #22313F;
+	font-family: serif;
+  font-size: 20px;
 }
 
 .modal-body .author {

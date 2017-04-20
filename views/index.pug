@@ -14,7 +14,7 @@ html
           a(href="/login") Sign in via Twitter
       img(src="images/shine_logo.png")
       div.intro
-        p You feel a little gray today. That's okay. Use the arrow keys to take a walk. Maybe you'll find something to shine about.
+        p 
     #game-screen
     #modal.modal
       .modal-dialog.animated
@@ -23,6 +23,18 @@ html
           .modal-body
           .modal-footer
             button.btn Shine On
+    #new-modal.modal
+      .modal-dialog.animated
+        .modal-content
+          .modal-header
+            p.special It's Time to Shine
+          .modal-body
+            p.intro You feel a little gray today. 
+            p.intro That's okay. 
+            p.intro Use the arrow keys to take a walk. 
+            p.intro Maybe you'll find something to shine about.
+          .modal-footer
+            button.btn Get Shiny
     script(src="/app.bundle.js")
     
       
