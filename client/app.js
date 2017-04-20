@@ -11,7 +11,7 @@ const TWEEN = require('tween.js');
 
 class Game {
   constructor() {
-    let client = require('socket.io-client')();
+    this.client = require('socket.io-client')();
     this.app = new PIXI.Application(800, 600, { backgroundColor: '0xD3D3D3' });
     this.container = new PIXI.Container();
     this.map = { width: 2000, height: 2000 };
@@ -48,17 +48,17 @@ class Game {
 
     document.querySelector('#game-screen').appendChild(this.app.view);
 
-    client.on('player:update', (id, data) => {
+    this.client.on('player:update', (id, data) => {
       this.playerManager.updatePlayer(id, data);
     });
 
-    client.on('player:create', (id, data) => {
+    this.client.on('player:create', (id, data) => {
       let otherPlayer = this.playerManager.addPlayer(id, data);
 
       this.container.addChild(otherPlayer);
     });
 
-    client.on('player:disconnect', (id) => {
+    this.client.on('player:disconnect', (id) => {
       let player = this.playerManager.players[id];
       this.container.removeChild(player);
       this.playerManager.removePlayer(id);
@@ -66,12 +66,12 @@ class Game {
 
     this.player.on('move', this.moveCamera.bind(this));
 
-    this.player.on('change', function(player) {
-      client.emit('player:change', player.data);
+    this.player.on('change', (player) => {
+      this.client.emit('player:change', player.data);
     });
 
-    this.player.on('create', function(player) {
-      client.emit('player:create', player.data);
+    this.player.on('create', (player) => {
+      this.client.emit('player:create', player.data);
     });
 
     this.rmodal = new Rmodal($('#modal')[0], { afterClose: () => {
@@ -101,10 +101,6 @@ class Game {
           $('.modal-header').html($divTwo.append($headerText));
           $('.modal-body').html($div.append($body).append($author));
           this.rmodal.open();
-
-          client.emit('quote', quote, function (message) {
-            //window.alert(message)
-          })
         })
       }
     }
