@@ -9,8 +9,9 @@ const _ = require('lodash');
 const getQuotes = require('./services/quote_service');
 const getPhotos = require('./services/photo_service');
 const passport = require('passport');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
+const session = require('./middleware/session');
+const socketSession = require('./middleware/socket_session');
+const socketUser = require('./middleware/socket_user')
 const generateID = require('./shared/id_generator');
 const PlayerManager = require('./lib/player_manager');
 
@@ -20,6 +21,10 @@ let server = http.createServer(app);
 let io = socketio(server);
 let playerManager = new PlayerManager();
 
+io.use(socketSession);
+
+io.use(socketUser);
+
 io.on('connection', function(socket) {
   console.info('Connected')
   let id = generateID();
@@ -27,10 +32,12 @@ io.on('connection', function(socket) {
     socket.emit('player:create', id, player);
   })
   socket.on('player:change', function(data) {
+    data.username = _.get(socket, 'user.username');
     playerManager.updatePlayer(id, data);
     socket.broadcast.emit('player:update', id, data);
   })
   socket.on('player:create', function(data) {
+    data.username = _.get(socket, 'user.username');
     playerManager.addPlayer(id, data);
     socket.broadcast.emit('player:create', id, data);
   })
@@ -44,13 +51,7 @@ app.set('view engine', 'pug');
 
 app.use(express.static('public'));
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  store: new RedisStore({url: process.env.REDIS_URL}),
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: 'auto' }
-}));
+app.use(session);
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -6,7 +6,7 @@ class PlayerManager {
   }
 
   addPlayer(id, data) {
-    this.players[id] = new OtherPlayer(data.x, data.y, data.shiny);
+    this.players[id] = new OtherPlayer(data.x, data.y, data.shiny, data.username);
     return this.players[id];
   }
 

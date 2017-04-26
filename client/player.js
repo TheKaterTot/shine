@@ -91,18 +91,33 @@ class PlayerGraphic extends PIXI.Graphics {
   }
 }
 
+class PlayerName extends PIXI.Text {
+  constructor() {
+    let style = new PIXI.TextStyle({
+      fontSize: 16,
+      fontFamily: 'monospace'
+    })
+    super('You', style);
+
+  }
+}
+
 class Player extends PIXI.Sprite {
   constructor(x, y, shiny = 0) {
     super(PIXI.Texture.fromImage('/images/background.png'));
     this.sprite = new PlayerSprite();
     this.graphic = new PlayerGraphic();
+    this.playerName = new PlayerName();
     this.sprite.shine = shiny;
     this.graphic.shine = shiny;
     this.addChild(this.graphic);
     this.addChild(this.sprite);
+    this.addChild(this.playerName);
     this.speed = 1.5;
     this.x = x;
     this.y = y;
+    this.playerName.x = (this.width / 2.0) - (this.playerName.width / 2.0);
+    this.playerName.y = -20.0;
     this.id = generateID();
     process.nextTick(() => {
       this.emit('create', this);
