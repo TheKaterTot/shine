@@ -8,10 +8,9 @@ const PlayerManager = require('./managers/player_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 const TWEEN = require('tween.js');
-const client = require('socket.io-client')();
 
 class Game {
-  constructor() {
+  constructor(client) {
     this.client = client;
     this.app = new PIXI.Application(800, 600, { backgroundColor: '0xD3D3D3' });
     this.container = new PIXI.Container();
@@ -55,7 +54,6 @@ class Game {
 
     this.client.on('player:create', (id, data) => {
       let otherPlayer = this.playerManager.addPlayer(id, data);
-
       this.container.addChild(otherPlayer);
     });
 
@@ -63,7 +61,7 @@ class Game {
       let player = this.playerManager.players[id];
       this.container.removeChild(player);
       this.playerManager.removePlayer(id);
-    })
+    });
 
     this.player.on('move', this.moveCamera.bind(this));
 
@@ -171,25 +169,27 @@ PIXI.loader
   .add('/images/grass2.png')
   .add('/images/background.png').load(function () {
     rmodal = new Rmodal($('#new-modal')[0], { afterClose: () => {
-      new Game();
+      const client = require('socket.io-client')();
+      new Game(client);
+
+      $('#message').on('submit', function(event) {
+        event.preventDefault();
+        let $message = $(this).find('#message-input');
+        client.emit('message:new', $message.val());
+        $message.val('');
+      })
+
+      client.on('message:new', function(data) {
+        let $p = $('<p />');
+        $p.html(`<b>${data.username}: </b> ${data.message}`);
+        let $messages = $('.messages');
+        $messages.append($p);
+        $messages.scrollTop($messages[0].scrollHeight);
+      })
     }});
+
     rmodal.open();
     $('#new-modal .modal-footer .btn').on('click', () => {
       rmodal.close();
     })
   });
-
-$('#message').on('submit', function(event) {
-  event.preventDefault();
-  let $message = $(this).find('#message-input');
-  client.emit('message:new', $message.val());
-  $message.val('');
-})
-
-client.on('message:new', function(data) {
-  let $p = $('<p />');
-  $p.html(`<b>${data.username}: </b> ${data.message}`);
-  let $messages = $('.messages');
-  $messages.append($p);
-  $messages.scrollTop($messages[0].scrollHeight);
-})

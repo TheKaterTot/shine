@@ -31,6 +31,7 @@ io.on('connection', function(socket) {
   _.forIn(playerManager.players, function(player, id) {
     socket.emit('player:create', id, player);
   })
+
   socket.on('player:change', function(data) {
     data.username = _.get(socket, 'user.username');
     playerManager.updatePlayer(id, data);
