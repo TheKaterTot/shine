@@ -190,6 +190,13 @@ header img {
 	font-weight: bold;
 }
 
+#chat-screen .messages.signed-out {
+	font-weight: bold;
+	text-align: center;
+	line-height: 573px;
+	font-size: 20px;
+}
+
 #chat-screen #message {
 	bottom: 7px;
 }

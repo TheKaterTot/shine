@@ -41,6 +41,9 @@ html
           .messages
           form#message
             input(name="message", placeholder="Press 'Enter' to send your message", autocomplete="off")#message-input
+        - else
+          .messages.signed-out
+            | Log in to view chat
     script(src="/app.bundle.js")
     
       
