@@ -2,7 +2,12 @@ const PIXI = require('pixi.js');
 const ArcadeKeys = require('arcade_keys');
 const generateID = require('../shared/id_generator');
 
-let arcadeKeys = ArcadeKeys();
+let arcadeKeys = ArcadeKeys(null, [
+  ArcadeKeys.keys.up,
+  ArcadeKeys.keys.down,
+  ArcadeKeys.keys.left,
+  ArcadeKeys.keys.right
+]);
 
 class PlayerSprite extends PIXI.Sprite {
 

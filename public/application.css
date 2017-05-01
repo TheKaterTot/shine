@@ -90,14 +90,18 @@ header img {
 
 
 /* Content */
+#content {
+	width: 1230px;
+}
+
 #game-screen {
   padding-top: 10px;
+	margin-left: 10px;
+	display: inline;
+	float: left;
 }
 
 #game-screen canvas {
-  display: block;
-  margin: auto;
-  padding: auto;
   border-width: 5px;
   border-style: solid;
   border-color: black;
@@ -160,6 +164,40 @@ header img {
   text-shadow: -1px 1px #417cb8;
 	font-size: 16px;
   border: none;
+}
+
+#chat-screen {
+	margin-top: 10px;
+	height: 600px;
+	width: 400px;
+	background-color: E4F1FE;
+	border-width: 5px;
+  border-style: solid;
+  border-color: black;
+	float: right;
+	display: inline;
+}
+
+#chat-screen .messages {
+	height: 573px;
+	border-bottom-width: 2px;
+	border-bottom-color: gray;
+	border-bottom-style: solid;
+	overflow-y: scroll;
+}
+
+#chat-screen .messages b {
+	font-weight: bold;
+}
+
+#chat-screen #message {
+	bottom: 7px;
+}
+
+#chat-screen #message #message-input {
+	width: 390px;
+	margin-left: 5px;
+	margin-top: 3px;
 }
 
 /* Logo */

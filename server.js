@@ -45,6 +45,12 @@ io.on('connection', function(socket) {
     playerManager.removePlayer(id);
     io.emit('player:disconnect', id);
   })
+  socket.on('message:new', function(message) {
+    let data = {};
+    data.username = _.get(socket, 'user.username');
+    data.message = message;
+    io.emit('message:new', data);
+  })
 });
 
 app.set('view engine', 'pug');

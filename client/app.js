@@ -8,10 +8,11 @@ const PlayerManager = require('./managers/player_manager');
 const Bump = require('bump.js');
 const Rmodal = require('./rmodal');
 const TWEEN = require('tween.js');
+const client = require('socket.io-client')();
 
 class Game {
   constructor() {
-    this.client = require('socket.io-client')();
+    this.client = client;
     this.app = new PIXI.Application(800, 600, { backgroundColor: '0xD3D3D3' });
     this.container = new PIXI.Container();
     this.map = { width: 2000, height: 2000 };
@@ -177,3 +178,18 @@ PIXI.loader
       rmodal.close();
     })
   });
+
+$('#message').on('submit', function(event) {
+  event.preventDefault();
+  let $message = $(this).find('#message-input');
+  client.emit('message:new', $message.val());
+  $message.val('');
+})
+
+client.on('message:new', function(data) {
+  let $p = $('<p />');
+  $p.html(`<b>${data.username}: </b> ${data.message}`);
+  let $messages = $('.messages');
+  $messages.append($p);
+  $messages.scrollTop($messages[0].scrollHeight);
+})

@@ -14,27 +14,33 @@ html
           a(href="/login") Sign in via Twitter
       img(src="images/shine_logo.png")
       div.intro
-        p 
-    #game-screen
-    #modal.modal
-      .modal-dialog.animated
-        .modal-content
-          .modal-header
-          .modal-body
-          .modal-footer
-            button.btn Shine On
-    #new-modal.modal
-      .modal-dialog.animated
-        .modal-content
-          .modal-header
-            p.special It's Time to Shine
-          .modal-body
-            p.intro You feel a little gray today. 
-            p.intro That's okay. 
-            p.intro Use the arrow keys to take a walk. 
-            p.intro Maybe you'll find something to shine about.
-          .modal-footer
-            button.btn Get Shiny
+        p
+    #content
+      #game-screen
+      #modal.modal
+        .modal-dialog.animated
+          .modal-content
+            .modal-header
+            .modal-body
+            .modal-footer
+              button.btn Shine On
+      #new-modal.modal
+        .modal-dialog.animated
+          .modal-content
+            .modal-header
+              p.special It's Time to Shine
+            .modal-body
+              p.intro You feel a little gray today. 
+              p.intro That's okay. 
+              p.intro Use the arrow keys to take a walk. 
+              p.intro Maybe you'll find something to shine about.
+            .modal-footer
+              button.btn Get Shiny
+      #chat-screen
+        - if(user)
+          .messages
+          form#message
+            input(name="message", placeholder="Press 'Enter' to send your message", autocomplete="off")#message-input
     script(src="/app.bundle.js")
     
       
